@@ -1,0 +1,6 @@
+# configuration
+DATABASE = '/tmp/cocfinder.db'
+DEBUG = True
+SECURITY_KEY = 'development key'
+USERNAME = 'admin'
+PASSWORD = 'default'
