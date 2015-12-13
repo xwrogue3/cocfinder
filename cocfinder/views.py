@@ -1,5 +1,4 @@
-from flask import Flask
-app = Flask('cocfinder')
+from cocfinder import app
 
 @app.route('/')
 def main():
