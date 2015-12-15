@@ -1,11 +1,13 @@
 from contextlib import closing
 from flask import Flask, g
-import sqlite3
+from flask.ext.sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
-
-import cocfinder.views
-
 app.config.from_envvar('COCFINDER_SETTINGS')
+
+db = SQLAlchemy(app)
+
+from cocfinder import models, views
 
 def init_db():
     with closing(connect_db()) as db:
