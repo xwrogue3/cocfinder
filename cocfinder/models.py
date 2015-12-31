@@ -162,6 +162,14 @@ class BaseManager(Manager):
             db.session.delete(base)
             db.session.commit()
 
+    def by_league(self, trophyleague, th=None, found_th=None):
+        bases = Base.query.filter_by(found_league=trophyleague)
+        if th:
+            bases = bases.filter_by(th=th)
+        if found_th:
+            bases = bases.filter_by(found_th=found_th)
+        return bases.all()
+
 
 class Base(db.Model):
     id = db.Column(db.Integer, primary_key=True)
