@@ -45,7 +45,7 @@ def main(args):
             elif re.search('Free\/Total Builders', l):
                 # Next line has our bases trophy count
                 found_builders = True
-            if re.search(BASE_STATS, l):
+            if re.search(BASE_STATS, l) and trophyleague:
                 add_base(l, trophyleague, th)
 
 
