@@ -170,6 +170,17 @@ class BaseManager(Manager):
             bases = bases.filter_by(found_th=found_th)
         return bases.all()
 
+    def avg_loot(self, bases):
+        num_bases = len(bases)
+        gold = 0
+        elixir = 0
+        de = 0
+        for base in bases:
+            gold += base.gold
+            elixir += base.elixir
+            de += base.de
+        return (gold/num_bases, elixir/num_bases, de/num_bases)
+
 
 class Base(db.Model):
     id = db.Column(db.Integer, primary_key=True)
