@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+Show the average loot per Townhall per trophy league
+
+<div class="container-fluid">
+    <div ng-repeat="league in avg_stats" class="row">
+        <div class="row">
+            <div class="col-xs-1">
+                <b>[[league.league]]</b>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-repeat="th in league.th" class="col-xs-1">
+                <b>TownHall [[th.townhall]]</b><br>
+                Gold: [[th.avg_resources.gold]]<br>
+                Elixir: [[th.avg_resources.elixir]]<br>
+                DE: [[th.avg_resources.de]]<br>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
