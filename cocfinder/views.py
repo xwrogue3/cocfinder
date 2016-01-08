@@ -1,6 +1,6 @@
 import json
 
-from flask import abort, request
+from flask import abort, request, render_template
 from flask.views import MethodView
 
 from cocfinder import app
@@ -9,7 +9,7 @@ from cocfinder.models import Base, TownHallLevel, TrophyLeague
 
 @app.route('/')
 def main():
-    return 'This is the main view'
+    return render_template('main.html')
 
 
 class BaseView(MethodView):
@@ -18,10 +18,39 @@ class BaseView(MethodView):
     def list():
         bases = []
         for base in Base.query.all():
-            bases.append(base.to_dict())
+            if base:
+                bases.append(base.to_dict())
         return json.dumps(bases)
 
 # Need CRUD views for the bases
+
+
+class StatsAPI(object):
+    # Class to hold all our stats API views
+    @app.route('/stats/avg')
+    def averages():
+        townhalls = TownHallLevel.query.all()
+        averages = []
+        entry = {}
+        for tl in TrophyLeague.query.all():
+            entry = {'league': str(tl),
+                     'th': []}
+            for th in townhalls:
+                bases = Base.objects.by_league(tl, th=th)
+                if bases:
+                    gold, lix, de = Base.objects.avg_loot(bases)
+                    entry['th'].append({
+                        'townhall': th.level,
+                        'avg_resources': {
+                            'gold': gold,
+                            'elixir': lix,
+                            'de': de
+                        }
+                    })
+            averages.append(entry)
+        return json.dumps(averages)
+
+
 
 
 class TrophyLeagueAPI(MethodView):
